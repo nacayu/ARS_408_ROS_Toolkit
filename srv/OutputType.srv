@@ -1,0 +1,6 @@
+# none
+# send objects
+# send clusters
+#输出聚类后的点云或者点云
+uint8 output_type
+---
