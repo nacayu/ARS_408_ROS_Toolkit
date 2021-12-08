@@ -148,7 +148,7 @@ radar_state::RadarState *ARS_40X_CAN::get_radar_state() {
 radar_cfg::RadarCfg *ARS_40X_CAN::get_radar_cfg() {
   return &radar_cfg_;
 }
-//new added
+//new added  添加到雷达can的大类中
 radar_filter_cfg::RadarFilterCfg *ARS_40X_CAN::get_radar_filter_cfg() {
   return &radar_filter_cfg_;
 }

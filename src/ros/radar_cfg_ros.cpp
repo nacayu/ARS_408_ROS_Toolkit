@@ -6,15 +6,18 @@
 //这里是设置ros参数的地方,从这里发布
 namespace ars_40X {
 //new added
-radar_filter_cfg::RadarFilterCfg(ros::NodeHandle &nh, ARS_40X_CAN * ars_40X_can):
-    ars_40X_can_(ars_40X_can){
-      radar_filter_cfg_ = ars_40X_can->get_radar_filter_cfg();//返回的是类的引用而不是指针
-    set_max_filter_distance_service = 
-      nh.advertiseService("")
-    }
+// radar_filter_cfg::RadarFilterCfg(ros::NodeHandle &nh, ARS_40X_CAN * ars_40X_can):
+//     ars_40X_can_(ars_40X_can){
+//       radar_filter_cfg_ = ars_40X_can->get_radar_filter_cfg();//返回的是类的引用而不是指针
+//   set_filter_lifetime_service_ = 
+//       nh.advertiseService("set_filter_min_lifetime", &RadarCfgROS::set_filter_lifetime, this);
+//     }
 RadarCfgROS::RadarCfgROS(ros::NodeHandle &nh, ARS_40X_CAN *ars_40X_can) :
     ars_40X_can_(ars_40X_can) {
+
   radar_cfg_ = ars_40X_can->get_radar_cfg();
+  radar_filter_cfg_ = ars_40X_can->get_radar_filter_cfg();//返回的是类的引用而不是指针 new added
+
   set_max_distance_service_ =
       nh.advertiseService("set_max_distance", &RadarCfgROS::set_max_distance, this);//第二个参数是函数
   set_sensor_id_service_ = nh.advertiseService("set_sensor_id", &RadarCfgROS::set_sensor_id, this);
@@ -34,10 +37,25 @@ RadarCfgROS::RadarCfgROS(ros::NodeHandle &nh, ARS_40X_CAN *ars_40X_can) :
       nh.advertiseService("set_store_in_nvm", &RadarCfgROS::set_store_in_nvm, this);
   set_rcs_threshold_service_ =
       nh.advertiseService("set_rcs_threshold", &RadarCfgROS::set_rcs_threshold, this);
+  //new added
+  set_filter_lifetime_service_ = 
+      nh.advertiseService("set_filter_min_lifetime", &RadarCfgROS::set_filter_lifetime, this);
+    }
+
 }
 
 RadarCfgROS::~RadarCfgROS() {
 }
+//new added
+bool RadarCfgROS::set_filter_lifetime(
+    RadarFilter::Request &req,
+    RadarFilter::Response & /*res*/) {
+  if (!radar_filter_cfg_->set_filter_min_lifetime(static_cast<uint64_t>(req.FilterLifetime))) {//修改filter的raw_data值
+  }
+  ars_40X_can_->send_radar_data(can_messages::FilterCfg);//传入带有帧头的数据，即在上一句raw_data值已更新得值
+  return true;
+}
+
 
 bool RadarCfgROS::set_max_distance(
     MaxDistance::Request &req,

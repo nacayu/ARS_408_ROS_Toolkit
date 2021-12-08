@@ -9,27 +9,23 @@ namespace ars_40X {
 namespace radar_filter_cfg{
   RadarFilterCfg::RadarFilterCfg(){
   //new added
-  radar_filter_cfg_msg.data.RadarCfg_Filter_Distance_valid = 0;
-  radar_filter_cfg_msg.data.RadarCfg_Filter_Lifetime_valid = 0;
+  radar_filter_cfg_msg.data.FilterCfg_Min_Lifetime1 = 2;
+  radar_filter_cfg_msg.data.FilterCfg_Min_Lifetime2 = 0;
+  radar_filter_cfg_msg.data.FilterCfg_Type = 0;
+  radar_filter_cfg_msg.data.FilterCfg_Index = 0x6;//life time模式
   }
   RadarFilterCfg::~RadarFilterCfg(){
 
   }
-  bool RadarFilterCfg::set_filter_distance(uint64_t distance_limited, bool valid){
+  bool RadarFilterCfg::set_filter_min_lifetime(uint64_t min_life_time, bool valid){
     //TODO
-    radar_filter_cfg_msg.data.RadarCfg_Filter_Lifetime = static_cast<uint64_t>(distance_limited);//转为64位，方便进行数据发送，因为can帧的数据为64位
-    radar_filter_cfg_msg.data.RadarCfg_Filter_Lifetime_valid = static_cast<uint64_t>(valid);
+    if(min_life_time < 0){
+      return false;
+    }
+    radar_filter_cfg_msg.data.FilterCfg_Min_Lifetime1 = min_life_time >> 8;//转为64位，方便进行数据发送，因为can帧的数据为64位
+    radar_filter_cfg_msg.data.FilterCfg_Min_Lifetime2 = min_life_time & 0xff;//转为64位，方便进行数据发送，因为can帧的数据为64位
+    radar_filter_cfg_msg.data.FilterCfg_Valid = static_cast<uint64_t>(valid);
     return true;
-  }
-
-  bool RadarFilterCfg::set_filter_lifetime(uint64_t lifetime, bool valid){
-    //todo
-    radar_filter_cfg_msg.data.RadarCfg_Filter_Distance = static_cast<uint64_t>(lifetime);
-    radar_filter_cfg_msg.data.RadarCfg_Filter_Distance_valid = static_cast<uint64_t>(valid);
-    return true;
-  }
-  radar_filter_cfg *RadarFilterCfg::get_radar_filter_cfg() {
-    return &radar_filter_cfg_msg;
   }
 
 }
@@ -57,8 +53,8 @@ bool RadarCfg::set_max_distance(uint64_t distance, bool valid) {//由ros_service
   }
   distance /= 2;
   //对最大最小距离定义完成后，还要定义valid,使其有效
-  radar_cfg_msg.data.RadarCfg_MaxDistance1 = distance >> 2;//为什么右移两位:
-  radar_cfg_msg.data.RadarCfg_MaxDistance2 = distance & 0b11; //与0111 0001 0001 做交
+  radar_cfg_msg.data.RadarCfg_MaxDistance1 = distance >> 2;//为什么右移两位:这里和maxdistance的存储位置有关
+  radar_cfg_msg.data.RadarCfg_MaxDistance2 = distance & 0b11; //注意0b是二进制
   radar_cfg_msg.data.RadarCfg_MaxDistance_valid = static_cast<uint64_t>(valid);
   return true;
 }

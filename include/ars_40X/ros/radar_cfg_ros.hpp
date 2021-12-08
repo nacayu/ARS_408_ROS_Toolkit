@@ -65,10 +65,6 @@ class RadarCfgROS {
       RCSThreshold::Request &req,
       RCSThreshold::Response & /*res*/);
     //new added
-  bool set_filter_max_distance(
-      MaxFilterDistance::Request &req,
-      MaxFilterDistance::Response &/*res*/
-  );
   bool set_filter_lifetime(
       FilterLifetime::Request &req,
       FilterLifetime::Response &/*res*/
@@ -76,8 +72,9 @@ class RadarCfgROS {
 
  private:
   ARS_40X_CAN *ars_40X_can_;
-
+//建立饼初始化雷达两个配置类
   radar_cfg::RadarCfg *radar_cfg_;
+  radar_filter_cfg::RadarFilterCfg *radar_filter_cfg_;
 
   ros::ServiceServer set_max_distance_service_;
 
@@ -98,6 +95,8 @@ class RadarCfgROS {
   ros::ServiceServer set_store_in_nvm_service_;
 
   ros::ServiceServer set_rcs_threshold_service_;
+  //new added
+  ros::ServiceServer set_filter_lifetime_service_;
 };
 }
 

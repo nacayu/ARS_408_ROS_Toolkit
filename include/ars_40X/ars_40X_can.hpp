@@ -60,7 +60,7 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
 
 
 
-  //get detection in cluster mode，这些方法是不能重载的
+  //这里定义的是类指针，一是初始化基本类，二是返回基本类的指针供调用
   cluster_list::Cluster_0_Status *get_cluster_0_status();//这里函数返回cluster_0_status_
 
   cluster_list::Cluster_1_General *get_cluster_1_general();
@@ -82,10 +82,8 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
   radar_state::RadarState *get_radar_state();
 
   radar_cfg::RadarCfg *get_radar_cfg();
-
   //new added
   radar_filter_cfg::RadarFilterCfg *get_radar_filter_cfg();
-
 
 
 
@@ -106,7 +104,7 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
   virtual void send_radar_state() {};
 //这里为什么返回的是类，而前面返回的是类指针呢？？？？
 /*
-
+答案：这里先定义类，前面的类指针是返回基类的指针，通过在继承类中调用达到自己目的
 */
  private:// private variable only used in ars_40x_can class
   socket_can::SocketCAN can_; // socket_can lib
@@ -132,7 +130,6 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
   radar_state::RadarState radar_state_;
 
   radar_cfg::RadarCfg radar_cfg_;
-
   //new added
   radar_filter_cfg::RadarFilterCfg radar_filter_cfg_;
 };

@@ -9,16 +9,22 @@
 #include <cstdint>
 
 namespace ars_40X {// 这个命名空间内含有ars_40x开发包里面的所有的功能函数
-
+//filter index决定了采用那种滤波模式，如filter_index = 0x1则16位开始的滤波是进行距离滤波
 //filter union function
 namespace radar_filter_cfg{
   typedef union radar_filter_cfg{
     struct{
-      bool RadarCfg_Filter_Distance_valid;
-      bool RadarCfg_Filter_Lifetime_valid;
-          //new added
-      uint64_t RadarCfg_Filter_Distance;
-      uint64_t RadarCfg_Filter_Lifetime;
+      uint64_t Reserved1 : 1;
+      uint64_t FilterCfg_Valid : 1;
+      uint64_t FilterCfg_Active : 1; 
+      uint64_t FilterCfg_Index : 4; 
+      uint64_t FilterCfg_Type : 1;
+      uint64_t FilterCfg_Min_Lifetime1 : 4;
+      uint64_t Reserved2 : 4;
+      uint64_t FilterCfg_Min_Lifetime2 : 8;
+      uint64_t Filter_Max_Lifetime1 : 4;
+      uint64_t Reserved3 : 4;
+      uint64_t FilterCfg_Max_Lifetime2 : 8;
     } data = {};
     uint8_t raw_data[5];
   }radar_filter_cfg;
@@ -29,9 +35,11 @@ namespace radar_filter_cfg{
 
     ~RadarFilterCfg();
     //todo
-    bool set_filter_distance(uint64_t distance_limited, bool valid = true);
+    //bool set_filter_max_lifetime(uint64_t min_life_time, bool valid = true);
 
-    bool set_filter_lifetime(uint64_t max_life_time, bool valid = true);
+    bool set_filter_min_lifetime(uint64_t max_life_time, bool valid = true);
+
+    //bool set_filter_filtercfg_type(uint64_t filter_type, bool valid = true);
     
     radar_filter_cfg *get_radar_filter_cfg();
 
