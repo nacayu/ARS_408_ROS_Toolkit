@@ -1,7 +1,7 @@
 //
 // Created by shivesh on 9/14/19.
 //
-
+//这里主要是关于雷达自身
 #ifndef ARS_40X_MOTION_INPUT_SIGNALS_HPP
 #define ARS_40X_MOTION_INPUT_SIGNALS_HPP
 

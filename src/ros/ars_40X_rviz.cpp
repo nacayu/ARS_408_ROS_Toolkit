@@ -17,7 +17,7 @@ ContinentalRadarRViz::ContinentalRadarRViz() {
   clusters_pub_ = nh.advertise<visualization_msgs::MarkerArray>("visualize_clusters", 50);
   objects_pub_ = nh.advertise<visualization_msgs::MarkerArray>("visualize_objects", 50);
   velocity_pub_ = nh.advertise<visualization_msgs::MarkerArray>("visualize_velocity", 50);
-  clusters_sub_ =
+  clusters_sub_ =//订阅cluster等点云数据信息
       nh.subscribe("ars_40X/clusters", 50, &ContinentalRadarRViz::clusters_callback, this);
   objects_sub_ =
       nh.subscribe("ars_40X/objects", 50, &ContinentalRadarRViz::objects_callback, this);
@@ -26,7 +26,7 @@ ContinentalRadarRViz::ContinentalRadarRViz() {
 ContinentalRadarRViz::~ContinentalRadarRViz() {
 }
 
-void ContinentalRadarRViz::clusters_callback(ars_40X::ClusterList cluster_list) {
+void ContinentalRadarRViz::clusters_callback(ars_40X::ClusterList cluster_list) {//这里将订阅到的点云信息进行marker格式转化并进一步显示出来
   visualization_msgs::MarkerArray marker_array;
   for (auto cluster : cluster_list.clusters) {
     //traverse every cluster in cluster_list
@@ -34,7 +34,7 @@ void ContinentalRadarRViz::clusters_callback(ars_40X::ClusterList cluster_list) 
     visualization_msgs::Marker marker;
     //a set of attributes of marker
     marker.type = visualization_msgs::Marker::POINTS;
-    marker.header.frame_id = cluster_list.header.frame_id;//present frame id
+    marker.header.frame_id = cluster_list.header.frame_id;//present frame id，这里的frame_id与前面的frame_id不一样，是帧数
     marker.action = visualization_msgs::Marker::ADD;
     marker.header.stamp = cluster_list.header.stamp;//present time stamp
     marker.id = cluster.id;
@@ -109,7 +109,7 @@ void ContinentalRadarRViz::clusters_callback(ars_40X::ClusterList cluster_list) 
     marker.scale.x = 0.1;
     marker.scale.y = 0.1;
     marker.color.a = 1.0;
-    marker.lifetime.fromSec(0.1);
+    marker.lifetime.fromSec(0.1);//marker生存时间
     marker_array.markers.push_back(marker);
   }
   clusters_pub_.publish(marker_array);
@@ -275,7 +275,7 @@ void ContinentalRadarRViz::objects_callback(ars_40X::ObjectList object_list) {
 }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) {//这里和ars_40x包一样，同时运行
   ros::init(argc, argv, "ars_40X_rviz");
   ars_40X::ContinentalRadarRViz ars_40X_rviz;
   ros::spin();

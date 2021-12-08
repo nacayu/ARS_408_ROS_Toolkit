@@ -56,6 +56,6 @@ void ClusterListROS::send_cluster_2_quality() {
       cluster_2_quality_->get_cluster_ambiguity_state();
   cluster_list.clusters[cluster_id_].invalid_state =
       cluster_2_quality_->get_cluster_validity_state();
-  ++cluster_id_;
+  ++cluster_id_;//这里的Id是标记的每个点云
 }
 }

@@ -8,11 +8,46 @@
 #include <algorithm>
 #include <cstdint>
 
-namespace ars_40X {// this namespace defines all of radar's status and provides a set
-// functions to set the parameters
+namespace ars_40X {// 这个命名空间内含有ars_40x开发包里面的所有的功能函数
+
+//filter union function
+namespace radar_filter_cfg{
+  typedef union radar_filter_cfg{
+    struct{
+      bool RadarCfg_Filter_Distance_valid;
+      bool RadarCfg_Filter_Lifetime_valid;
+          //new added
+      uint64_t RadarCfg_Filter_Distance;
+      uint64_t RadarCfg_Filter_Lifetime;
+    } data = {};
+    uint8_t raw_data[5];
+  }radar_filter_cfg;
+
+  class RadarFilterCfg{
+    public:
+    RadarFilterCfg();
+
+    ~RadarFilterCfg();
+    //todo
+    bool set_filter_distance(uint64_t distance_limited, bool valid = true);
+
+    bool set_filter_lifetime(uint64_t max_life_time, bool valid = true);
+    
+    radar_filter_cfg *get_radar_filter_cfg();
+
+    private:
+    radar_filter_cfg radar_filter_cfg_msg; // this variable will be used for message definition
+
+  }
+
+}
+
+
+
 namespace radar_cfg {
-typedef union radar_cfg {// set status
+typedef union radar_cfg {//所有雷达参数的设置都在这里，其中valid结尾的是表明更改是否有效
   struct {
+    //按照位数来赋值
     uint64_t RadarCfg_MaxDistance_valid:1;
     uint64_t RadarCfg_SensorID_valid:1;
     uint64_t RadarCfg_RadarPower_valid:1;
@@ -21,7 +56,7 @@ typedef union radar_cfg {// set status
     uint64_t RadarCfg_SendExtInfo_valid:1;
     uint64_t RadarCfg_SortIndex_valid:1;
     uint64_t RadarCfg_StoreInNVM_valid:1;
-    uint64_t RadarCfg_MaxDistance1:8;
+    uint64_t RadarCfg_MaxDistance1:8;//设置最大最小距离
     uint64_t Reserved:6;
     uint64_t RadarCfg_MaxDistance2:2;
     uint64_t Reserved2:8;
@@ -33,16 +68,23 @@ typedef union radar_cfg {// set status
     uint64_t RadarCfg_SendQuality:1;
     uint64_t RadarCfg_SendExtInfo:1;
     uint64_t RadarCfg_SortIndex:3;
-    uint64_t RadarCfg_StoreInNVM:1;
+    uint64_t RadarCfg_StoreInNVM:1;//这个设置是否永久保存上次的雷达设置，如果为1则为是
     uint64_t RadarCfg_RCS_Threshold_valid:1;
     uint64_t RadarCfg_RCS_Threshold:3;
+
     uint64_t Reserved3:4;
     uint64_t Reserved4:8;
+
   } data = {};// {} is null indicate that radar_cfg data is set to null when initialization
 
-
   uint8_t raw_data[8];
-} radar_cfg; // radar_cfg is defined as a union type to save memory, not for any other
+} radar_cfg;
+/* 
+这个union体，初始化为空，后面会根据需要进行初始化
+雷达的配置帧格式：8 * 8 bit，也就是每个byte会有八位的功能位，同时每个项目都有一个byte
+发送格式为：先发送帧头，告知雷达要发送的内容类型：例如配置信息，然后发送一个8 * 8 bit的数据即可，其中数据要按照雷达的格式要求来发送，
+发送的数据不仅要注意位数限制，还要注意真实情况下的限制
+*/
 
 class RadarCfg {//all of those function (e.g. set_max_distance()) is used to set radar's 
 // status
@@ -50,7 +92,7 @@ class RadarCfg {//all of those function (e.g. set_max_distance()) is used to set
   RadarCfg();
 
   ~RadarCfg();
-
+//在默认下，valid默认设置为true
   bool set_max_distance(uint64_t distance, bool valid = true);
 
   bool set_sensor_id(int id, bool valid = true);
@@ -70,6 +112,7 @@ class RadarCfg {//all of those function (e.g. set_max_distance()) is used to set
   void set_store_in_nvm(bool store_in_nvm, bool valid = true);
 
   bool set_rcs_threshold(int rcs_threshold, bool valid = true);
+
 
   radar_cfg *get_radar_cfg();
 

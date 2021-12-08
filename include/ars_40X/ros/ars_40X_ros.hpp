@@ -25,7 +25,7 @@ class ARS_40X_ROS : public ARS_40X_CAN {
 
   void receive_data();
 
-  void run();
+  void run();//单独开启一个线程取数据
 
   void send_cluster_0_status();
 

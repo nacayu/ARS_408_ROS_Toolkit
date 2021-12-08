@@ -15,8 +15,8 @@ RadarStateROS::~RadarStateROS() {
 }
 
 void RadarStateROS::send_radar_state() {
-  RadarStatus radar_status_msg;
-  radar_status_msg.read_status = radar_state_->get_read_status();
+  RadarStatus radar_status_msg;//ros 消息
+  radar_status_msg.read_status = radar_state_->get_read_status();//更新雷达ros的消息
   radar_status_msg.write_status = radar_state_->get_write_status();
   radar_status_msg.max_distance = radar_state_->get_max_distance();
   radar_status_msg.persistent_error = radar_state_->get_persistent_error_status();

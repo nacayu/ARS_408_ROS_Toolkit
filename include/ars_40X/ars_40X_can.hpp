@@ -19,7 +19,7 @@
 
 namespace ars_40X {
 //intitialize the status of radar
-// we commenly think can_id is 0x00, so radarcfg is 0x201
+// we commenly think can_id is 0x00, so radarcfg is 0x201， 这里的变量都是关键数据
 typedef enum can_messages {
   RadarCfg = 0x200,
   RadarState = 0x201,
@@ -32,7 +32,7 @@ typedef enum can_messages {
   CollDetRegionState = 0x402,
   SpeedInformation = 0x300,
   YawRateInformation = 0x301,
-  Cluster_0_Status = 0x600,
+  Cluster_0_Status = 0x600,//三个分别请求的是：状态，
   Cluster_1_General = 0x701,
   Cluster_2_Quality = 0x702,
   Object_0_Status = 0x60A,
@@ -54,11 +54,14 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
 
   ~ARS_40X_CAN();
 
-  virtual bool receive_radar_data();// receive data from can
+  virtual bool receive_radar_data();// receive data from can，根据帧头来判断是哪一类数据
 
   virtual bool send_radar_data(uint32_t frame_id); //send data to can
-  //get detection in cluster mode
-  cluster_list::Cluster_0_Status *get_cluster_0_status();
+
+
+
+  //get detection in cluster mode，这些方法是不能重载的
+  cluster_list::Cluster_0_Status *get_cluster_0_status();//这里函数返回cluster_0_status_
 
   cluster_list::Cluster_1_General *get_cluster_1_general();
 
@@ -68,7 +71,7 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
 
   motion_input_signals::YawRateInformation *get_yaw_rate_information();
   //get detection in object mode
-  object_list::Object_0_Status *get_object_0_status();
+  object_list::Object_0_Status *get_object_0_status();//类定义的函数，返回的是类,这个用于ros调用并返回类
 
   object_list::Object_1_General *get_object_1_general();
 
@@ -79,6 +82,12 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
   radar_state::RadarState *get_radar_state();
 
   radar_cfg::RadarCfg *get_radar_cfg();
+
+  //new added
+  radar_filter_cfg::RadarFilterCfg *get_radar_filter_cfg();
+
+
+
 
   virtual void send_cluster_0_status() {};
 
@@ -95,7 +104,10 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
   virtual void send_object_3_extended() {};
 
   virtual void send_radar_state() {};
+//这里为什么返回的是类，而前面返回的是类指针呢？？？？
+/*
 
+*/
  private:// private variable only used in ars_40x_can class
   socket_can::SocketCAN can_; // socket_can lib
   //all of followings are structure
@@ -120,6 +132,9 @@ class ARS_40X_CAN {// ars_40x_can not only define the status, but also defines t
   radar_state::RadarState radar_state_;
 
   radar_cfg::RadarCfg radar_cfg_;
+
+  //new added
+  radar_filter_cfg::RadarFilterCfg radar_filter_cfg_;
 };
 }
 

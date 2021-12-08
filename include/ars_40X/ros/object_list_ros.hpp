@@ -30,7 +30,7 @@ class ObjectListROS {
   void send_object_3_extended();
 
  private:
-  std::string frame_id_;
+  std::string frame_id_;#这个在很多地方都有用到
 
   ros::Publisher objects_data_pub_;
 

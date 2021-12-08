@@ -11,11 +11,12 @@ namespace ars_40X {
 namespace cluster_list {
 typedef union cluster_0_status {
   struct {
-    uint64_t Cluster_NofClustersNear:8;
+    //所有变量位域的长度加起来等于data长度
+    uint64_t Cluster_NofClustersNear:8;//位域的长度
     uint64_t Cluster_NofClustersFar:8;
     uint64_t Cluster_MeasCounter1:8;
     uint64_t Cluster_MeasCounter2:8;
-    uint64_t Reserved:4;
+    uint64_t Reserved:4;//保留的四位
     uint64_t Cluster_InterfaceVersion:4;
   } data = {};
 
@@ -24,7 +25,7 @@ typedef union cluster_0_status {
 
 typedef union cluster_1_general {
   struct {
-    uint64_t Cluster_ID:8;//这里的数值是什么意思
+    uint64_t Cluster_ID:8;
     uint64_t Cluster_DistLong1:8;
     uint64_t Cluster_DistLat1:2;
     uint64_t Reserved:1;

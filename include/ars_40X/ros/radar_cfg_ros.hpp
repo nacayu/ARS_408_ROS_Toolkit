@@ -64,6 +64,15 @@ class RadarCfgROS {
   bool set_rcs_threshold(
       RCSThreshold::Request &req,
       RCSThreshold::Response & /*res*/);
+    //new added
+  bool set_filter_max_distance(
+      MaxFilterDistance::Request &req,
+      MaxFilterDistance::Response &/*res*/
+  );
+  bool set_filter_lifetime(
+      FilterLifetime::Request &req,
+      FilterLifetime::Response &/*res*/
+  );
 
  private:
   ARS_40X_CAN *ars_40X_can_;

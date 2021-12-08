@@ -8,7 +8,7 @@
 #include <cstdint>
 
 namespace ars_40X {// works on the same space as radar_cfg.hpp
-namespace radar_state {// radar_state space inside the ars_40x space
+namespace radar_state {//从这里初始化雷达的数据
 typedef union radar_state {
   struct {
     uint64_t Reserved:6;

@@ -28,7 +28,7 @@ class RadarStateROS {
 
   ARS_40X_CAN *ars_40X_can_;
 
-  radar_state::RadarState *radar_state_;
+  radar_state::RadarState *radar_state_;//这里是一个消息类型
 };
 }
 

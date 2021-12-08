@@ -35,7 +35,7 @@ class ClusterListROS {
 
   ClusterList cluster_list;
 
-  cluster_list::Cluster_0_Status *cluster_0_status_;
+  cluster_list::Cluster_0_Status *cluster_0_status_;//一个类指针
 
   cluster_list::Cluster_1_General *cluster_1_general_;
 

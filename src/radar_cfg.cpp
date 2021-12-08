@@ -5,8 +5,36 @@
 #include <ars_40X/radar_cfg.hpp>
 
 namespace ars_40X {
+//new added
+namespace radar_filter_cfg{
+  RadarFilterCfg::RadarFilterCfg(){
+  //new added
+  radar_filter_cfg_msg.data.RadarCfg_Filter_Distance_valid = 0;
+  radar_filter_cfg_msg.data.RadarCfg_Filter_Lifetime_valid = 0;
+  }
+  RadarFilterCfg::~RadarFilterCfg(){
+
+  }
+  bool RadarFilterCfg::set_filter_distance(uint64_t distance_limited, bool valid){
+    //TODO
+    radar_filter_cfg_msg.data.RadarCfg_Filter_Lifetime = static_cast<uint64_t>(distance_limited);//转为64位，方便进行数据发送，因为can帧的数据为64位
+    radar_filter_cfg_msg.data.RadarCfg_Filter_Lifetime_valid = static_cast<uint64_t>(valid);
+    return true;
+  }
+
+  bool RadarFilterCfg::set_filter_lifetime(uint64_t lifetime, bool valid){
+    //todo
+    radar_filter_cfg_msg.data.RadarCfg_Filter_Distance = static_cast<uint64_t>(lifetime);
+    radar_filter_cfg_msg.data.RadarCfg_Filter_Distance_valid = static_cast<uint64_t>(valid);
+    return true;
+  }
+  radar_filter_cfg *RadarFilterCfg::get_radar_filter_cfg() {
+    return &radar_filter_cfg_msg;
+  }
+
+}
 namespace radar_cfg {
-RadarCfg::RadarCfg() {//对雷达设置进行定义,这是定义的雷达新类
+RadarCfg::RadarCfg() {//对雷达设置进行初始定义,应该定义为1才能进行更改
   radar_cfg_msg.data.RadarCfg_MaxDistance_valid = 0;
   radar_cfg_msg.data.RadarCfg_SensorID_valid = 0;
   radar_cfg_msg.data.RadarCfg_RadarPower_valid = 0;
@@ -23,13 +51,14 @@ RadarCfg::~RadarCfg() {//进行析构:无内容
 }
 
 //下面对雷达的各项参数进行设定
-bool RadarCfg::set_max_distance(uint64_t distance, bool valid) {
+bool RadarCfg::set_max_distance(uint64_t distance, bool valid) {//由ros_service传入其中值
   if (distance < 90 || distance > 1000) {
     return false;
   }
   distance /= 2;
-  radar_cfg_msg.data.RadarCfg_MaxDistance1 = distance >> 2;
-  radar_cfg_msg.data.RadarCfg_MaxDistance2 = distance & 0b11;
+  //对最大最小距离定义完成后，还要定义valid,使其有效
+  radar_cfg_msg.data.RadarCfg_MaxDistance1 = distance >> 2;//为什么右移两位:
+  radar_cfg_msg.data.RadarCfg_MaxDistance2 = distance & 0b11; //与0111 0001 0001 做交
   radar_cfg_msg.data.RadarCfg_MaxDistance_valid = static_cast<uint64_t>(valid);
   return true;
 }

@@ -3,13 +3,20 @@
 //
 
 #include "ars_40X/ros/radar_cfg_ros.hpp"
-
+//这里是设置ros参数的地方,从这里发布
 namespace ars_40X {
+//new added
+radar_filter_cfg::RadarFilterCfg(ros::NodeHandle &nh, ARS_40X_CAN * ars_40X_can):
+    ars_40X_can_(ars_40X_can){
+      radar_filter_cfg_ = ars_40X_can->get_radar_filter_cfg();//返回的是类的引用而不是指针
+    set_max_filter_distance_service = 
+      nh.advertiseService("")
+    }
 RadarCfgROS::RadarCfgROS(ros::NodeHandle &nh, ARS_40X_CAN *ars_40X_can) :
     ars_40X_can_(ars_40X_can) {
   radar_cfg_ = ars_40X_can->get_radar_cfg();
   set_max_distance_service_ =
-      nh.advertiseService("set_max_distance", &RadarCfgROS::set_max_distance, this);
+      nh.advertiseService("set_max_distance", &RadarCfgROS::set_max_distance, this);//第二个参数是函数
   set_sensor_id_service_ = nh.advertiseService("set_sensor_id", &RadarCfgROS::set_sensor_id, this);
   set_radar_power_service_ =
       nh.advertiseService("set_radar_power", &RadarCfgROS::set_radar_power, this);
@@ -35,7 +42,7 @@ RadarCfgROS::~RadarCfgROS() {
 bool RadarCfgROS::set_max_distance(
     MaxDistance::Request &req,
     MaxDistance::Response & /*res*/) {
-  if (!radar_cfg_->set_max_distance(static_cast<uint64_t>(req.max_distance))) {
+  if (!radar_cfg_->set_max_distance(static_cast<uint64_t>(req.max_distance))) {//src文件中,radar_cfg_是之前radar_config.cpp定义的类指针，以此传入其中
     return false;
   }
   ars_40X_can_->send_radar_data(can_messages::RadarCfg);
@@ -65,10 +72,10 @@ bool RadarCfgROS::set_radar_power(
 bool RadarCfgROS::set_output_type(
     OutputType::Request &req,
     OutputType::Response & /*res*/) {
-  if (!radar_cfg_->set_output_type(req.output_type)) {
+  if (!radar_cfg_->set_output_type(req.output_type)) {//获取需要更改的信息
     return false;
   }
-  ars_40X_can_->send_radar_data(can_messages::RadarCfg);
+  ars_40X_can_->send_radar_data(can_messages::RadarCfg);//发送至雷达
   return true;
 }
 

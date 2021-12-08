@@ -33,7 +33,7 @@ int Cluster_0_Status::get_interface_version() {
 cluster_0_status *Cluster_0_Status::get_cluster_0_status() {
   return &cluster_0_status_msg;
 }
-//////
+//////这里为什么把类定义成指针类型
 Cluster_1_General::Cluster_1_General() {
 }
 

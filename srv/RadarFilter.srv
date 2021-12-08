@@ -1,0 +1,3 @@
+uint8 MaxFilterDistance;
+uint8 FilterLifetime;
+---
