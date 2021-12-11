@@ -6,12 +6,7 @@
 //这里是设置ros参数的地方,从这里发布
 namespace ars_40X {
 //new added
-// radar_filter_cfg::RadarFilterCfg(ros::NodeHandle &nh, ARS_40X_CAN * ars_40X_can):
-//     ars_40X_can_(ars_40X_can){
-//       radar_filter_cfg_ = ars_40X_can->get_radar_filter_cfg();//返回的是类的引用而不是指针
-//   set_filter_lifetime_service_ = 
-//       nh.advertiseService("set_filter_min_lifetime", &RadarCfgROS::set_filter_lifetime, this);
-//     }
+
 RadarCfgROS::RadarCfgROS(ros::NodeHandle &nh, ARS_40X_CAN *ars_40X_can) :
     ars_40X_can_(ars_40X_can) {
 
@@ -40,9 +35,8 @@ RadarCfgROS::RadarCfgROS(ros::NodeHandle &nh, ARS_40X_CAN *ars_40X_can) :
   //new added
   set_filter_lifetime_service_ = 
       nh.advertiseService("set_filter_min_lifetime", &RadarCfgROS::set_filter_lifetime, this);
-    }
+  }
 
-}
 
 RadarCfgROS::~RadarCfgROS() {
 }
@@ -51,6 +45,7 @@ bool RadarCfgROS::set_filter_lifetime(
     RadarFilter::Request &req,
     RadarFilter::Response & /*res*/) {
   if (!radar_filter_cfg_->set_filter_min_lifetime(static_cast<uint64_t>(req.FilterLifetime))) {//修改filter的raw_data值
+    return false;
   }
   ars_40X_can_->send_radar_data(can_messages::FilterCfg);//传入带有帧头的数据，即在上一句raw_data值已更新得值
   return true;
@@ -123,7 +118,7 @@ bool RadarCfgROS::set_sort_index(
   return true;
 }
 
-bool  ::set_ctrl_relay_cfg(
+bool RadarCfgROS::set_ctrl_relay_cfg(
     std_srvs::SetBool::Request &req,
     std_srvs::SetBool::Response & /*res*/) {
   radar_cfg_->set_ctrl_relay_cfg(static_cast<bool>(req.data));

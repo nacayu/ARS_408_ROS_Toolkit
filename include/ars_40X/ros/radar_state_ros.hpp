@@ -10,7 +10,7 @@
 
 #include <cstdint>
 
-#include ""
+#include "ars_40X/ars_40X_can.hpp"
 #include "ars_40X/RadarStatus.h"
 
 namespace ars_40X {

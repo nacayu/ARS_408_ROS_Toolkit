@@ -53,6 +53,7 @@ if ($ENV{ROS_VERSION} EQUAL 1)
       RCSThreshold.srv
       SensorID.srv
       SortIndex.srv
+      RadarFilter.srv
   )
 
   generate_messages(DEPENDENCIES std_msgs geometry_msgs)

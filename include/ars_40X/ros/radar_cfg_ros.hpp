@@ -17,6 +17,7 @@
 #include "ars_40X/RCSThreshold.h"
 #include "ars_40X/SensorID.h"
 #include "ars_40X/SortIndex.h"
+#include "ars_40X/RadarFilter.h"
 
 namespace ars_40X {
 class RadarCfgROS {
@@ -66,9 +67,8 @@ class RadarCfgROS {
       RCSThreshold::Response & /*res*/);
     //new added
   bool set_filter_lifetime(
-      FilterLifetime::Request &req,
-      FilterLifetime::Response &/*res*/
-  );
+      RadarFilter::Request &req,
+      RadarFilter::Response & /*res*/);
 
  private:
   ARS_40X_CAN *ars_40X_can_;

@@ -46,7 +46,7 @@ namespace radar_filter_cfg{
     private:
     radar_filter_cfg radar_filter_cfg_msg; // this variable will be used for message definition
 
-  }
+  };
 
 }
 

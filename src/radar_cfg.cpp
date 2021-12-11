@@ -19,13 +19,16 @@ namespace radar_filter_cfg{
   }
   bool RadarFilterCfg::set_filter_min_lifetime(uint64_t min_life_time, bool valid){
     //TODO
-    if(min_life_time < 0){
+    if(min_life_time < 1 || min_life_time > 10){
       return false;
     }
     radar_filter_cfg_msg.data.FilterCfg_Min_Lifetime1 = min_life_time >> 8;//转为64位，方便进行数据发送，因为can帧的数据为64位
     radar_filter_cfg_msg.data.FilterCfg_Min_Lifetime2 = min_life_time & 0xff;//转为64位，方便进行数据发送，因为can帧的数据为64位
     radar_filter_cfg_msg.data.FilterCfg_Valid = static_cast<uint64_t>(valid);
     return true;
+  }
+  radar_filter_cfg *RadarFilterCfg::get_radar_filter_cfg() {
+  return &radar_filter_cfg_msg;
   }
 
 }
