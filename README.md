@@ -1,4 +1,4 @@
-# ARS_40X
+# ARS_40X_Toolkit
 
  ARS_40X package contains a driver for the Continental radar ARS_404 / ARS_408.
  The package also contains a ROS Wrapper for the driver.
