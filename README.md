@@ -1,13 +1,11 @@
 # ARS_40X_Toolkit
-
- ARS_40X package contains a driver for the Continental radar ARS_404 / ARS_408.
- The package also contains a ROS Wrapper for the driver.
+Our Tookkit is built based on socket_can.
 
 #### Requirements
 
 - [socket_can](https://github.com/Project-MANAS/socket_can)
 
-#### Launching with arguments
+#### Get started
 
 ```bash
 roslaunch ars_40X ars_40X.launch visualize:=true obstacle_array:=true
