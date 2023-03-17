@@ -1,6 +1,6 @@
 # Folders
-/.vscode
-/.history
+.vscode
+.history
 # Prerequisites
 *.d
 
