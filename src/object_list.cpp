@@ -1,6 +1,3 @@
-//
-// Created by shivesh on 9/17/19.
-//
 
 #include "ars_40X/object_list.hpp"
 

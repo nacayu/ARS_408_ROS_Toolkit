@@ -1,6 +1,4 @@
-//
-// Created by shivesh on 9/14/19.
-//
+
 
 #include <ars_40X/radar_state.hpp>
 

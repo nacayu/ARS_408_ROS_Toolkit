@@ -1,6 +1,4 @@
-//
-// Created by shivesh on 9/14/19.
-//
+
 
 #ifndef ARS_40X_MOTION_INPUT_SIGNALS_ROS_HPP
 #define ARS_40X_MOTION_INPUT_SIGNALS_ROS_HPP

@@ -1,6 +1,3 @@
-//
-// Created by shivesh on 9/13/19.
-//
 
 #ifndef ARS_40X_OBSTACLE_ARRAY_HPP
 #define ARS_40X_OBSTACLE_ARRAY_HPP

@@ -1,6 +1,3 @@
-//
-// Created by shivesh on 9/14/19.
-//modified by naca on 11/11/2021
 
 #include <ars_40X/radar_cfg.hpp>
 

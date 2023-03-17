@@ -1,6 +1,4 @@
-//
-// Created by shivesh on 9/13/19.
-//
+
 
 #include "ars_40X/ros/ars_40X_ros.hpp"
 

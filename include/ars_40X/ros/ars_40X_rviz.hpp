@@ -1,6 +1,3 @@
-//
-// Created by shivesh on 9/13/19.
-//
 
 #ifndef ARS_40X_ARS_40X_RVIZ_HPP
 #define ARS_40X_ARS_40X_RVIZ_HPP

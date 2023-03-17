@@ -1,5 +1,5 @@
 # ARS_40X_Toolkit
-Our Tookkit is built based on [socket_can](https://github.com/Project-MANAS/socket_can) and you should install it first.
+Our Toolkit is built based on [socket_can](https://github.com/Project-MANAS/socket_can) and you should install it first.
 ## Install(Installation in Chinese)
 [CSDN](https://blog.csdn.net/weixin_43253464/article/details/121208924?spm=1001.2014.3001.5501)
 

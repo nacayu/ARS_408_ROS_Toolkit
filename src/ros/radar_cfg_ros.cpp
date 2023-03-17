@@ -1,6 +1,4 @@
-//
-// Created by shivesh on 9/14/19.
-//
+
 
 #include "ars_40X/ros/radar_cfg_ros.hpp"
 //这里是设置ros参数的地方,从这里发布

@@ -1,6 +1,3 @@
-//
-// Created by shivesh on 9/14/19.
-//
 
 #include <ars_40X/motion_input_signals.hpp>
 

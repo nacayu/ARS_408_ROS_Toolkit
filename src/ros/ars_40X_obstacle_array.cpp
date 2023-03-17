@@ -1,6 +1,4 @@
-//
-// Created by shivesh on 9/18/19.
-//
+
 //
 #include <ros/ros.h>
 #include <visualization_msgs/MarkerArray.h>

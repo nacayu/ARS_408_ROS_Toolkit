@@ -1,8 +1,3 @@
-//
-// Created by shivesh on 9/13/19.
-//all of data are received from this .cpp file
-//
-
 #include "ars_40X/ars_40X_can.hpp"
 
 namespace ars_40X {

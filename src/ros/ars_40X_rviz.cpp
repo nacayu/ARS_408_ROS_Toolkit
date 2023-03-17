@@ -1,5 +1,4 @@
 
-// Created by shivesh on 9/18/19.
 //this section mainly descrive how to visiulize the cluster or object point
 //by publishing 
 

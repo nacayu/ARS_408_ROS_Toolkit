@@ -1,8 +1,5 @@
 #include <utility>
 
-//
-// Created by shivesh on 9/17/19.
-//
 
 #include "ars_40X/ros/cluster_list_ros.hpp"
 
