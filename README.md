@@ -1,22 +1,20 @@
 # ARS_40X_Toolkit
-Our Tookkit is built based on socket_can.
+Our Tookkit is built based on [socket_can](https://github.com/Project-MANAS/socket_can) and you should install it first.
+## Install(Installation in Chinese)
+[CSDN](https://blog.csdn.net/weixin_43253464/article/details/121208924?spm=1001.2014.3001.5501)
 
-#### Requirements
+And We refer to [ars408X technical manual](https://download.csdn.net/download/weixin_43253464/57895869?spm=1001.2014.3001.5501) to develop this repo.
 
-- [socket_can](https://github.com/Project-MANAS/socket_can)
-
-#### Get started
+## Get started
 
 ```bash
 roslaunch ars_40X ars_40X.launch visualize:=true obstacle_array:=true
 ```
 
-#### Arguments available
-
 - **visualize** *(default:"true")* : Launches RViz to display the clusters/obstacles as markers.
 - **obstacle_array** *(default:"false")* : Launches ars_40X_obstacle_array node which publishes obstacles as geometry_msgs/Polygon
 
-#### Publications
+## Publications
 
 |Message|Type|Description|Message Box|
 |---|---|---|---|
@@ -26,16 +24,13 @@ roslaunch ars_40X ars_40X.launch visualize:=true obstacle_array:=true
 |/visualize_clusters|visualization_msgs/MarkerArray|Clusters markers for RViz visualization| - |
 |/visualize_objects|visualization_msgs/MarkerArray|Object markers for RViz visualization| - |
 
-#### Subscription
+## Subscription
 
 |Message|Type|Description|Message Box|
 |---|---|---|---|
 |/odom|nav_msgs/Odometry|Velocity and accleration information|0x300, 0x301|
 
-
-#### Services
-The following services are available for configuring the radar options available in 0x200
-
+## Services
 |Services|
 |---|
 |/set_ctrl_relay_cfg|
@@ -48,4 +43,5 @@ The following services are available for configuring the radar options available
 |/set_sensor_id|
 |/set_sort_index|
 |/set_store_in_nvm|
+|/set_filter|
 
